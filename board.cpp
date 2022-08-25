@@ -1,4 +1,5 @@
 #include <vector>
+#include <ctime>
 #include <SFML/Graphics.hpp>
 #include <cmath>
 #include <iostream>
@@ -22,10 +23,11 @@ enum class Diag : char {s,i,r};
         int num_i;
         int num_s;
         int num_r;
+        double inf_prob;
         public:
         Board(int n,double b,double y,int ii,int days_);
         void evolve();
-        int return_beta();
+        int return_beta(double prob);
         int return_gamma();
         void draw();
         };
@@ -40,21 +42,26 @@ enum class Diag : char {s,i,r};
         num_i=ii;
         num_s=dimension_*dimension_;
         num_r=0;
-         std::srand(std::time(nullptr));
-             int ran1 = (std::rand())%dimension_;
-             int ran2 = (std::rand())%dimension_;
-             grid[ran1][ran2]=Diag::i;
+        inf_prob=0.;
+        for(int i=0;i<inf;i++){
+          std::random_device dev;
+            std::mt19937 generator(dev());
+            std::uniform_real_distribution<double> distr(0.0,1.0);         
+             int ran1 = distr(generator)*dimension_;
+             int ran2 = distr(generator)*dimension_;
+             grid[ran1][ran2]=Diag::i;}
           };
           
-
-        int Board::return_beta (){
-            double num1 = beta_;
+        int Board::return_beta (double prob){
+             double num1 = prob;
             std::random_device dev;
              std::mt19937 generator(dev());
              std::uniform_real_distribution<double> distr(0.0,1.0);
             if (distr(generator)<num1){return 1;}
             else{return 2;}
-        };
+
+
+}
 
         int Board::return_gamma (){
         double num2 = gamma_;
@@ -64,21 +71,29 @@ enum class Diag : char {s,i,r};
             if (distr(generator)<num2){return 1;}
             else{return 2;}
         }
-        
-        void Board::evolve(){
+                void Board::evolve(){
             num_i=0;
             num_s=0;
             num_r=0;
-            return_beta();
-            return_gamma();
-        for (int l = 0; l < dimension_-1; ++l) {
-        for (int c = 0; c < dimension_-1; ++c) {
+            int count_i;
+            count_i=0;
+        for (int l = 1; l < dimension_-1; ++l) {
+        for (int c = 1; c < dimension_-1; ++c) {
+            inf_prob=0;
             switch (grid[l][c]) {
             case Diag::s:
-            if (return_beta()==1){
+            for(int i=-1;i<=1;i++){
+            for (int j=-1;j<=1;j++){
+                if (grid[l-i][c-j]==Diag::i)
+                {count_i+=1;}}}
+            if(count_i>=1){
+            inf_prob=beta_;
+            if (return_beta(inf_prob)==1){
                 grid[l][c]=Diag::i;
                 num_i+=1;}
                 else{grid[l][c]=Diag::s;
+                num_s+=1;}}
+                else {grid[l][c]=Diag::s;
                 num_s+=1;}
                 break;
             case Diag::i:
@@ -97,6 +112,9 @@ enum class Diag : char {s,i,r};
             }}
             
             };
+
+           
+            ;
 
    void Board::draw() {
     float bit_size = 1.;
@@ -207,12 +225,10 @@ int main () {
     int n_;
     double b_;
     double y_;
-    int ii_;
+    int ii_count_i*indouble probinf_prob;
     int dayss_;
     std::cin >> n_>> b_>> y_>>ii_>>dayss_;
 
 Board b (n_,b_,y_,ii_,dayss_);
 b.draw();
-b.return_beta();
-b.return_gamma();
-std::cout<<b.return_beta()<<b.return_gamma()<<'\n';}
+}
