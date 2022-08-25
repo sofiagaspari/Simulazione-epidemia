@@ -1,9 +1,9 @@
 #include "epidemic.hpp"
+#include <cassert>
 #include <iomanip>
 #include <iostream>
-#include <vector>
 #include <stdexcept>
-#include <cassert>
+#include <vector>
 
 Epidemic::Epidemic(int s, int i, int r, double b, double y,
                    int d)     // construct definition
@@ -17,9 +17,9 @@ State Epidemic::Evolve(State const &start) { // function definition
   end.inf_ =
       start.inf_ + beta * start.sus_ * start.inf_ / tot - gamma * start.inf_;
   end.rim_ = start.rim_ + gamma * start.inf_;
-  assert(end.sus_>=0);
-  assert(end.inf_>=0);
-  assert(end.rim_>=0);
+  assert(end.sus_ >= 0);
+  assert(end.inf_ >= 0);
+  assert(end.rim_ >= 0);
   return end;
 };
 void Epidemic::Update(int d) { // function definition
@@ -47,39 +47,64 @@ int main() {
   double beta_;
   double gamma_;
   std::cout << "Inserisci il numero di suscettibili:";
-  std::cin >> n_s;
-  std::cout << "Inserisci il numero di infetti:";
-  std::cin >> n_i;
-  std::cout << "Inserisci il numero di rimossi:";
-  std::cin >> n_r;
-  std::cout   << "Inserisci il parametro beta (valore compresso tra 0 e 1 compresi):";
-  try{
-    std::cin >> beta_;
-    if(beta_<0 || beta_>1){
-        throw std::runtime_error{"Non sei all'interno del dominio di beta"};
+  try {
+    std::cin >> n_s;
+    if (n_s < 0) {
+      throw std::runtime_error{
+          "Il numero di suscettibili deve essere non negativo"};
     }
+  } catch (std::runtime_error const &e) {
+    std::cerr << e.what() << '\n';
   }
-    catch (std::runtime_error const& e) {
-       std::cerr << e.what() << '\n';
+  std::cout << "Inserisci il numero di infetti:";
+  try {
+    std::cin >> n_i;
+    if (n_i < 0) {
+      throw std::runtime_error{"Il numero di infetti deve essere non negativo"};
     }
+  } catch (std::runtime_error const &e) {
+    std::cerr << e.what() << '\n';
+  }
+  std::cout << "Inserisci il numero di rimossi:";
+  try {
+    std::cin >> n_r;
+    if (n_r < 0) {
+      throw std::runtime_error{"Il numero di rimossi deve essere non negativo"};
+    }
+  } catch (std::runtime_error const &e) {
+    std::cerr << e.what() << '\n';
+  }
+  std::cout
+      << "Inserisci il parametro beta (valore compresso tra 0 e 1 compresi):";
+  try {
+    std::cin >> beta_;
+    if (beta_ < 0 || beta_ > 1) {
+      throw std::runtime_error{"Non sei all'interno del dominio di beta"};
+    }
+  } catch (std::runtime_error const &e) {
+    std::cerr << e.what() << '\n';
+  }
 
-  
-  
   std::cout
       << "Inserisci il parametro gamma (valore compresso tra 0 e 1 compresi):";
-  try{
+  try {
     std::cin >> gamma_;
-    if(gamma_<0 || gamma_>1){
-        throw std::runtime_error{"Non sei all'interno del dominio di gamma"};
+    if (gamma_ < 0 || gamma_ > 1) {
+      throw std::runtime_error{"Non sei all'interno del dominio di gamma"};
     }
+  } catch (std::runtime_error const &e) {
+    std::cerr << e.what() << '\n';
   }
-    catch (std::runtime_error const& e) {
-       std::cerr << e.what() << '\n';
-    }
 
-  
   std::cout << "Inserisci il numero di giorni di evoluzione della epidemia:";
-  std::cin >> n_d;
+  try {
+    std::cin >> n_d;
+    if (n_d < 0) {
+      throw std::runtime_error{"Il numero di giorni deve essere non negativo"};
+    }
+  } catch (std::runtime_error const &e) {
+    std::cerr << e.what() << '\n';
+  }
   Epidemic p(n_s, n_i, n_r, beta_, gamma_, n_d);
   p.Update(n_d);
   std::cout << std::setw(6) << "Giorno" << '\t' << std::setw(11)
