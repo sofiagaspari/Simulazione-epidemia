@@ -1,36 +1,33 @@
 #ifndef EPIDEMIC_HPP
 #define EPIDEMIC_HPP
 
-#include <vector>
+#include <vector> //using vectors
 
+struct State { // struct declaration and definition
+  int sus_;    // data member
+  int inf_;
+  int rim_;
+};
 
-struct State {
-    int sus_ ;
-    int inf_ ;
-    int rim_ ;
-    }
-;
+class Epidemic { // class declaration and definition
+private:
+  std::vector<State> memory; // private
+  double beta;
+  double gamma;
+  int tot; // people
+  int days;
 
+public:
+  Epidemic(int s, int i, int r, double b, double y,
+           int d); // construct declaration
 
-class Epidemic {
-    std::vector<State> memory ;
-    double beta ;
-    double gamma ;
-    int tot;
-    int days;
-    public:
-     Epidemic (int s ,int i ,int r, double b, double y , int d );
+  State Evolve(State const &start); // function declaration
+  void Update(int d);               // function declaration
 
-     State Evolve ( State const& start);
-     void Update (int d);
+  int S_get(int i) const; // function declaration
 
-     int S_get ( int i) const ;
+  int I_get(int i) const; // function declaration
 
-    int I_get (int i) const;
-
-     int R_get (int i) const ;
-
-
+  int R_get(int i) const; // function declaration
 };
 #endif
-
