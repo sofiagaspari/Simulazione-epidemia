@@ -9,12 +9,6 @@ struct State {
     int sus_ ;
     int inf_ ;
     int rim_ ;
-    State (){
-    sus_= 0.;
-    inf_= 0.;
-    rim_ = 0.;
-        
-    }
     }
 
 
@@ -23,7 +17,7 @@ class Epidemic {
     std::vector<State> Memory ;
     double beta ;
     double gamma ;
-    int tot;
+    int tot; //persone
     int days;
     public:
     Epidemic (double b, double y ; int d );
@@ -32,7 +26,7 @@ class Epidemic {
 
     void Update (int d);
 
-    int S_get ( int d) const;
+    int S_get (int d) const;
 
     int I_get (int d) const;
 
