@@ -1,4 +1,3 @@
-
 #ifndef EPIDEMIC_HPP
 #define EPIDEMIC_HPP
 
@@ -10,27 +9,28 @@ struct State {
     int inf_ ;
     int rim_ ;
     }
+;
 
 
 class Epidemic {
-    private:
-    std::vector<State> Memory ;
+    std::vector<State> memory ;
     double beta ;
     double gamma ;
-    int tot; //persone
+    int tot;
     int days;
     public:
-    Epidemic (double b, double y ; int d );
+     Epidemic (int s ,int i ,int r, double b, double y , int d );
 
-    State Evolve ( State const& start);
+     State Evolve ( State const& start);
+     void Update (int d);
 
-    void Update (int d);
+     int S_get ( int i) const ;
 
-    int S_get (int d) const;
+    int I_get (int i) const;
 
-    int I_get (int d) const;
+     int R_get (int i) const ;
 
-    int R_get (int d) const;
 
-}
+};
 #endif
+
