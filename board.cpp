@@ -225,7 +225,7 @@ int main () {
     int n_;
     double b_;
     double y_;
-    int ii_count_i*indouble probinf_prob;
+    int ii_;
     int dayss_;
     std::cin >> n_>> b_>> y_>>ii_>>dayss_;
 
