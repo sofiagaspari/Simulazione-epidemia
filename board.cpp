@@ -19,27 +19,28 @@ enum class Diag : char {s,i,r};
         double beta_;
         double gamma_;
         int inf;
+        int rim;
         int days;
         int num_i;
         int num_s;
         int num_r;
         double inf_prob;
         public:
-        Board(int n,double b,double y,int ii,int days_);
+        Board(int s,int i,int r,double b,double y,int days_);
         void evolve();
         int return_beta(double prob);
         int return_gamma();
         void draw();
         };
-        
-       Board::Board (int n,double b,double y,int ii,int days_):
-        dimension_{static_cast<int>(sqrt(n))+2},
+        Board::Board(int s,int i,int r,double b,double y,int days_):
+        dimension_{static_cast<int>(sqrt(s+i+r))+2},
         grid(dimension_,std::vector<Diag> (dimension_)){
         beta_=b;
         gamma_=y;
-        inf=ii;
+        inf=i;
+        rim=r;
         days=days_;
-        num_i=ii;
+        num_i=i;
         num_s=dimension_*dimension_;
         num_r=0;
         inf_prob=0.;
@@ -49,19 +50,21 @@ enum class Diag : char {s,i,r};
             std::uniform_real_distribution<double> distr(0.0,1.0);         
              int ran1 = distr(generator)*dimension_;
              int ran2 = distr(generator)*dimension_;
-             grid[ran1][ran2]=Diag::i;}
-          };
-          
-        int Board::return_beta (double prob){
-             double num1 = prob;
+             grid[ran1][ran2]=Diag::i;
+        for(int i=0;i<rim;i++){
+             int ran3=distr(generator)*dimension_;
+             int ran4=distr(generator)*dimension_;
+             grid[ran3][ran4]=Diag::r;}}}
+        
+       int Board::return_beta (double prob){
+            double num1 = prob;
             std::random_device dev;
              std::mt19937 generator(dev());
              std::uniform_real_distribution<double> distr(0.0,1.0);
             if (distr(generator)<num1){return 1;}
-            else{return 2;}
+            else{return 2;}}
 
 
-}
 
         int Board::return_gamma (){
         double num2 = gamma_;
@@ -220,13 +223,14 @@ window.draw(text_r);
 
 
 int main () {
-    int n_;
+    int s_;
+    int i_;
+    int r_;
     double b_;
     double y_;
-    int ii_;
     int dayss_;
-    std::cin >> n_>> b_>> y_>>ii_>>dayss_;
+    std::cin >> s_>>i_>>r_>>b_>>y_>>dayss_;
 
-Board b (n_,b_,y_,ii_,dayss_);
+Board b (s_,i_,r_,b_,y_,dayss_);
 b.draw();
 }
