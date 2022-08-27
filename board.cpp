@@ -5,7 +5,6 @@
 #include <iostream>
 #include <random>
 #include <vector>
-//#include <cassert>
 #include <stdexcept>
 #include <thread>
 
@@ -144,7 +143,6 @@ void Board::draw() {
     bit_size = 2.;
   }
   int win_size = static_cast<int>(bit_size * dimension_);
-  // assert(win_size > 99 && win_size < 1001);
   sf::RenderWindow window(sf::VideoMode(win_size * 2, win_size), "epidemia");
   sf::RectangleShape sus_bit(sf::Vector2f(bit_size, bit_size));
   sf::RectangleShape inf_bit(sf::Vector2f(bit_size, bit_size));
