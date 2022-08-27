@@ -8,7 +8,8 @@ int main() {
   int n_d;
   double beta_;
   double gamma_;
-  std::cout << "Inserisci il numero di suscettibili:";
+ 
+  std::cout << "Per popolazioni maggiori di 100000, la simulazione grafica potrebbe risultare lenta." << '\n' << "Inserisci il numero di suscettibili:";
   try {
     std::cin >> n_s;
     if (n_s < 0) {
