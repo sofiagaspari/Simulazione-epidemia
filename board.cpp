@@ -18,6 +18,7 @@ private:
   std::vector<line> grid;
   double beta_;
   double gamma_;
+  int count_time;
   int inf;
   int rim;
   int days;
@@ -41,6 +42,7 @@ Board::Board(int s, int i, int r, double b, double y, int days_)
   inf = i;
   rim = r;
   days = days_;
+  count_time=0;
   num_i = i;
   num_s = dimension_ * dimension_;
   num_r = 0;
@@ -84,6 +86,7 @@ int Board::return_gamma() {
   }
 }
 void Board::evolve() {
+  count_time+=1;
   num_i = 0;
   num_s = 0;
   num_r = 0;
@@ -156,12 +159,16 @@ void Board::draw() {
     sf::Event event;
     while (window.pollEvent(event)) {
 
-      if (event.type == sf::Event::Closed)
+      if (event.type == sf::Event::Closed){
         window.close();
+      
+    }
+    if(count_time==days){
+      window.close();
     }
 
     window.clear();
-    for (int i = 0; i < days; i++) {
+   
       evolve();
       for (int l = 1; l < dimension_ - 1; ++l) {
         for (int c = 1; c < dimension_ - 1; ++c) {
