@@ -59,7 +59,7 @@ TEST_CASE("testing Epidemic") {
 TEST_CASE("testing Evolve") {
   e.Update(e.days);
   CHECK(e.memory[1].sus_ == 498);
-  CHECK(e.memory[1].inf_ == 0);
+  CHECK(e.memory[1].inf_ == 1);
   CHECK(e.memory[1].rim_ == 0);
 }
 
@@ -67,6 +67,6 @@ TEST_CASE("testing S_get, I_get and R_get") {
   e.Update(e.days);
 
   CHECK(e.S_get(1) == 498);
-  CHECK(e.I_get(1) == 0);
+  CHECK(e.I_get(1) == 1);
   CHECK(e.R_get(1) == 0);
 }
