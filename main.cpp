@@ -85,7 +85,7 @@ int main() {
   std::cout << "\n\n";
   
   std::cout << "Nella finestra grafica che si apre i suscettibili sono verdi, "
-               "gli infetti rossi e i rimossi blu"
+               "gli infetti rossi e i rimossi blu."
             << '\n';
 
   Board b(n_s, n_i, n_r, beta_, gamma_, n_d);
