@@ -170,9 +170,9 @@ void Board::draw() {
       text_s.setString(nums);
       text_i.setString(numi);
       text_r.setString(numr);
-      text_s.setCharacterSize(20);
-      text_i.setCharacterSize(20);
-      text_r.setCharacterSize(20);
+      text_s.setCharacterSize(0.15*win_size);
+      text_i.setCharacterSize(0.15*win_size);
+      text_r.setCharacterSize(0.15*win_size);
       text_s.setFillColor(sf::Color::Green);
       text_i.setFillColor(sf::Color::Red);
       text_r.setFillColor(sf::Color::Blue);
@@ -191,7 +191,7 @@ void Board::draw() {
               text_end.setFillColor(sf::Color::White);
               text_end.setString("SIMULATION ENDED:");
               text_end.setPosition(0.4*win_size,0.45*win_size);
-              text_end.setCharacterSize(0.25*win_size);
+              text_end.setCharacterSize(0.1*win_size);
               window.draw(text_end);
             window.draw(text_s);
             window.draw(text_i);
@@ -207,3 +207,5 @@ void Board::draw() {
     }
   }
 }
+
+      
