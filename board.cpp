@@ -9,34 +9,6 @@
 #include <stdexcept>
 #include <thread>
 
-enum class Diag : char { s, i, r };
-typedef std::vector<Diag> line;
-std::random_device dev;
-std::mt19937 generator(dev());
-std::uniform_real_distribution<double> distr(0.0, 1.0);
-
-class Board {
-private:
-  int dimension_;
-  std::vector<line> grid;
-  double beta_;
-  double gamma_;
-  int count_time;
-  int inf;
-  int rim;
-  int days;
-  int num_i;
-  int num_s;
-  int num_r;
-  double inf_prob;
-
-public:
-  Board(int s, int i, int r, double b, double y, int days_);
-  void evolve();
-  int return_beta(double prob);
-  int return_gamma();
-  void draw();
-};
 Board::Board(int s, int i, int r, double b, double y, int days_)
     : dimension_{static_cast<int>(sqrt(s + i + r)) + 2},
       grid(dimension_, std::vector<Diag>(dimension_)) {
@@ -49,7 +21,6 @@ Board::Board(int s, int i, int r, double b, double y, int days_)
   num_i = i;
   num_s = dimension_ * dimension_;
   num_r = 0;
-  inf_prob = 0.;
   for (int i = 0; i < inf; i++) {
     int ran1 = distr(generator) * dimension_;
     int ran2 = distr(generator) * dimension_;
@@ -62,8 +33,8 @@ Board::Board(int s, int i, int r, double b, double y, int days_)
   }
 }
 
-int Board::return_beta(double prob) {
-  double num1 = prob;
+int Board::return_beta() {
+  double num1 = beta_;
   
   if (distr(generator) < num1) {
     return 1;
@@ -89,7 +60,6 @@ void Board::evolve() {
   count_i = 0;
   for (int l = 1; l < dimension_ - 1; ++l) {
     for (int c = 1; c < dimension_ - 1; ++c) {
-      inf_prob = 0;
       switch (grid[l][c]) {
       case Diag::s:
         for (int i = -1; i <= 1; i++) {
@@ -100,7 +70,6 @@ void Board::evolve() {
           }
         }
         if (count_i >= 1) {
-          inf_prob = beta_;
           if (return_beta(inf_prob) == 1) {
             grid[l][c] = Diag::i;
             num_i += 1;
