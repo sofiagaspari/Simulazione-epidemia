@@ -18,12 +18,11 @@ private:
   int num_i;
   int num_s;
   int num_r;
-  double inf_prob;
 
 public:
   Board(int s, int i, int r, double b, double y, int days_);
   void evolve();
-  int return_beta(double prob);
+  int return_beta();
   int return_gamma();
   void draw();
 };
