@@ -1,3 +1,4 @@
+#include "board.hpp"
 #include <SFML/Graphics.hpp>
 #include <array>
 #include <cmath>
