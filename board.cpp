@@ -70,7 +70,7 @@ void Board::evolve() {
           }
         }
         if (count_i >= 1) {
-          if (return_beta(inf_prob) == 1) {
+          if (return_beta() == 1) {
             grid[l][c] = Diag::i;
             num_i += 1;
           } else {
