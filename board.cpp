@@ -104,9 +104,13 @@ void Board::evolve() {
 
 void Board::draw() {
   float bit_size = 1.;
-  if (dimension_ < 350) {
+  if (dimension_>100 && dimension_< 350) {
     bit_size = 2.;
   }
+    if(dimension_<100){
+        bit_size=4.;
+    }
+
   int win_size = static_cast<int>(bit_size * dimension_);
   sf::RenderWindow window(sf::VideoMode(win_size * 2, win_size), "epidemia");
   sf::RectangleShape sus_bit(sf::Vector2f(bit_size, bit_size));
@@ -187,7 +191,7 @@ void Board::draw() {
               text_end.setFillColor(sf::Color::White);
               text_end.setString("SIMULATION ENDED:");
               text_end.setPosition(0.4*win_size,0.45*win_size);
-              text_end.setCharacterSize(20);
+              text_end.setCharacterSize(0.25*win_size);
               window.draw(text_end);
             window.draw(text_s);
             window.draw(text_i);
