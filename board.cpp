@@ -1,5 +1,3 @@
-#include "board.hpp"
-#include <SFML/Graphics.hpp>
 #include <array>
 #include <cmath>
 #include <ctime>
@@ -9,7 +7,34 @@
 #include <stdexcept>
 #include <thread>
 
+enum class Diag : char { s, i, r };
+typedef std::vector<Diag> line;
+std::random_device dev;
+std::mt19937 generator(dev());
+std::uniform_real_distribution<double> distr(0.0, 1.0);
 
+class Board {
+private:
+  int dimension_;
+  std::vector<line> grid;
+  double beta_;
+  double gamma_;
+  int count_time;
+  int inf;
+  int rim;
+  int days;
+  int num_i;
+  int num_s;
+  int num_r;
+  double inf_prob;
+
+public:
+  Board(int s, int i, int r, double b, double y, int days_);
+  void evolve();
+  int return_beta(double prob);
+  int return_gamma();
+  void draw();
+};
 Board::Board(int s, int i, int r, double b, double y, int days_)
     : dimension_{static_cast<int>(sqrt(s + i + r)) + 2},
       grid(dimension_, std::vector<Diag>(dimension_)) {
@@ -24,9 +49,6 @@ Board::Board(int s, int i, int r, double b, double y, int days_)
   num_r = 0;
   inf_prob = 0.;
   for (int i = 0; i < inf; i++) {
-    std::random_device dev;
-    std::mt19937 generator(dev());
-    std::uniform_real_distribution<double> distr(0.0, 1.0);
     int ran1 = distr(generator) * dimension_;
     int ran2 = distr(generator) * dimension_;
     grid[ran1][ran2] = Diag::i;
@@ -40,9 +62,7 @@ Board::Board(int s, int i, int r, double b, double y, int days_)
 
 int Board::return_beta(double prob) {
   double num1 = prob;
-  std::random_device dev;
-  std::mt19937 generator(dev());
-  std::uniform_real_distribution<double> distr(0.0, 1.0);
+  
   if (distr(generator) < num1) {
     return 1;
   } else {
@@ -52,9 +72,6 @@ int Board::return_beta(double prob) {
 
 int Board::return_gamma() {
   double num2 = gamma_;
-  std::random_device dev;
-  std::mt19937 generator(dev());
-  std::uniform_real_distribution<double> distr(0.0, 1.0);
   if (distr(generator) < num2) {
     return 1;
   } else {
@@ -138,9 +155,7 @@ void Board::draw() {
         window.close();
       
     }
-    if(count_time==days){
-      window.close();
-    }
+    
 
     window.clear();
    
@@ -157,7 +172,7 @@ void Board::draw() {
             window.draw(inf_bit);
             break;
           case Diag::r:
-            rec_bit.setPosition(bit_size * c, bit_size * l);
+           rec_bit.setPosition(bit_size * c, bit_size * l);
             window.draw(rec_bit);
             break;
           }
@@ -194,6 +209,26 @@ void Board::draw() {
       window.draw(text_i);
       window.draw(text_r);
       window.display();
+        if(count_time==days){
+            window.clear();
+              sf::Text text_end;
+              text_end.setFont(font);
+              text_end.setFillColor(sf::Color::White);
+              text_end.setString("SIMULATION ENDED:");
+              text_end.setPosition(0.4*win_size,0.45*win_size);
+              text_end.setCharacterSize(20);
+              window.draw(text_end);
+            window.draw(text_s);
+            window.draw(text_i);
+            window.draw(text_r);
+            window.display();
+            std::this_thread::sleep_for(std::chrono::seconds(15));
+            window.close();
+           
+            
+              }
+        
+              
     }
   }
 }
