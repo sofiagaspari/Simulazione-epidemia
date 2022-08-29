@@ -8,8 +8,10 @@ int main() {
   int n_d;
   double beta_;
   double gamma_;
- 
-  std::cout << "Per popolazioni maggiori di 100000, la simulazione grafica potrebbe risultare lenta." << '\n' << "Inserisci il numero di suscettibili:";
+  std::cout << "Per popolazioni maggiori di 100000, la simulazione grafica "
+               "potrebbe risultare lenta."
+            << '\n'
+            << "Inserisci il numero di suscettibili:";
   try {
     std::cin >> n_s;
     if (n_s < 0) {
@@ -68,7 +70,7 @@ int main() {
   } catch (std::runtime_error const &e) {
     std::cerr << e.what() << '\n';
   }
-  
+
   Epidemic p(n_s, n_i, n_r, beta_, gamma_, n_d);
   p.Update(n_d);
   std::cout << std::setw(6) << "Giorno" << '\t' << std::setw(11)
@@ -84,11 +86,9 @@ int main() {
               << p.R_get(i) << '\n';
   };
   std::cout << "\n\n";
-  
   std::cout << "Nella finestra grafica che si apre i suscettibili sono verdi, "
                "gli infetti rossi e i rimossi blu."
             << '\n';
-
   Board b(n_s, n_i, n_r, beta_, gamma_, n_d);
-  b.draw();
+  b.draw(); 
 }
