@@ -22,7 +22,7 @@ $ g++ -Wall -Wextra -fsanitze=address test.cpp -o test
 
 $ ./test 
 
-Un’altra modalità per compilare ed eseguire sia la simulazione sia i test è utilizzando CMake 
+Un’altra modalità per compilare ed eseguire sia la simulazione sia i test è utilizzando CMake.
 
 Prima di tutto bisogna creare una nuova directory build: 
 
