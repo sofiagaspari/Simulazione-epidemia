@@ -34,16 +34,16 @@ $ cmake ..
 
 Poi per compilare: 
 
-$ make sir       //per compilare la simulazione 
+$ make sir       (per compilare la simulazione) 
 
-$ make sir-test  //per compilare i test 
+$ make sir-test  (per compilare i test)
 
-$ make           //per compilare entrambi 
+$ make           (per compilare entrambi)
 
 Infine, per eseguire: 
 
-$ ./sir          //per eseguire la simulazione 
+$ ./sir          (per eseguire la simulazione)
 
-$ ./sir-test     //per eseguire i test 
+$ ./sir-test     (per eseguire i test) 
 
  
