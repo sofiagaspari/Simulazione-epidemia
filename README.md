@@ -42,8 +42,8 @@ $ make           //per compilare entrambi
 
 Infine, per eseguire: 
 
-$ ./sir  //per eseguire la simulazione 
+$ ./sir          //per eseguire la simulazione 
 
-$ ./sir-test //per eseguire i test 
+$ ./sir-test     //per eseguire i test 
 
  
