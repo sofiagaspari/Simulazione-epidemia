@@ -1,0 +1,9 @@
+/Users/giovanniguidocapano/Desktop/progetto/build/CMakeFiles/edit_cache.dir
+/Users/giovanniguidocapano/Desktop/progetto/build/CMakeFiles/rebuild_cache.dir
+/Users/giovanniguidocapano/Desktop/progetto/build/simulation/CMakeFiles/sir.dir
+/Users/giovanniguidocapano/Desktop/progetto/build/simulation/CMakeFiles/window.dir
+/Users/giovanniguidocapano/Desktop/progetto/build/simulation/CMakeFiles/edit_cache.dir
+/Users/giovanniguidocapano/Desktop/progetto/build/simulation/CMakeFiles/rebuild_cache.dir
+/Users/giovanniguidocapano/Desktop/progetto/build/tests/CMakeFiles/sir-test.dir
+/Users/giovanniguidocapano/Desktop/progetto/build/tests/CMakeFiles/edit_cache.dir
+/Users/giovanniguidocapano/Desktop/progetto/build/tests/CMakeFiles/rebuild_cache.dir
