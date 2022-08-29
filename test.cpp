@@ -1,9 +1,9 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include "doctest.h"
-
 #include <stdexcept>
 #include <vector>
+
+#include "doctest.h"
 
 struct State {
   int sus_;
@@ -12,7 +12,7 @@ struct State {
 };
 
 class Epidemic {
-public:
+ public:
   std::vector<State> memory;
   double beta;
   double gamma;
