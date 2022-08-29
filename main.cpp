@@ -40,7 +40,7 @@ int main() {
     std::cerr << e.what() << '\n';
   }
   std::cout
-      << "Inserisci il parametro beta (valore compresso tra 0 e 1 compresi):";
+      << "Inserisci il parametro beta (valore compreso tra 0 e 1 inclusi):";
   try {
     std::cin >> beta_;
     if (beta_ < 0 || beta_ > 1) {
@@ -51,7 +51,7 @@ int main() {
   }
 
   std::cout
-      << "Inserisci il parametro gamma (valore compresso tra 0 e 1 compresi):";
+      << "Inserisci il parametro gamma (valore compreso tra 0 e 1 inclusi):";
   try {
     std::cin >> gamma_;
     if (gamma_ < 0 || gamma_ > 1) {
