@@ -1,13 +1,14 @@
 #ifndef BOARD_HPP
 #define BOARD_HPP
-#include <random>
 #include <vector>
+#include <random>
+
 
 enum class Diag : char { s, i, r };
 typedef std::vector<Diag> line;
-std::random_device dev;
-std::mt19937 generator(dev());
-std::uniform_real_distribution<double> distr(0.0, 1.0);
+inline std::random_device dev;
+inline std::mt19937 generator(dev());
+inline std::uniform_real_distribution<double> distr(0.0, 1.0);
 class Board {
  private:
   int dimension_;
