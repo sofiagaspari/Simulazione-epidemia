@@ -1,17 +1,18 @@
-#include "board.cpp"
-#include "epidemic.cpp"
-
+#include <iostream>
+#include "board.hpp"
+#include "epidemic.hpp"
+#include <iomanip>
+#include <stdexcept>
+#include <thread>
 int main() {
+
   int n_s;
   int n_i;
   int n_r;
   int n_d;
   double beta_;
   double gamma_;
-  std::cout << "Per popolazioni maggiori di 100000, la simulazione grafica "
-               "potrebbe risultare lenta."
-            << '\n'
-            << "Inserisci il numero di suscettibili:";
+  std::cout << "Inserisci il numero di suscettibili:";
   try {
     std::cin >> n_s;
     if (n_s < 0) {
@@ -40,7 +41,7 @@ int main() {
     std::cerr << e.what() << '\n';
   }
   std::cout
-      << "Inserisci il parametro beta (valore compreso tra 0 e 1 inclusi):";
+      << "Inserisci il parametro beta (valore compresso tra 0 e 1 compresi):";
   try {
     std::cin >> beta_;
     if (beta_ < 0 || beta_ > 1) {
@@ -51,7 +52,7 @@ int main() {
   }
 
   std::cout
-      << "Inserisci il parametro gamma (valore compreso tra 0 e 1 inclusi):";
+      << "Inserisci il parametro gamma (valore compresso tra 0 e 1 compresi):";
   try {
     std::cin >> gamma_;
     if (gamma_ < 0 || gamma_ > 1) {
@@ -64,13 +65,15 @@ int main() {
   std::cout << "Inserisci il numero di giorni di evoluzione della epidemia:";
   try {
     std::cin >> n_d;
-    if (n_d <= 0) {
-      throw std::runtime_error{"Il numero di giorni deve essere positivo"};
+    if (n_d < 0) {
+      throw std::runtime_error{"Il numero di giorni deve essere non negativo"};
     }
   } catch (std::runtime_error const &e) {
     std::cerr << e.what() << '\n';
   }
-
+  std::cout << "Nella finestra grafica che si apre i suscettibili sono verdi, "
+               "gli infetti rossi e i rimossi blu"
+            << '\n';
   Epidemic p(n_s, n_i, n_r, beta_, gamma_, n_d);
   p.Update(n_d);
   std::cout << std::setw(6) << "Giorno" << '\t' << std::setw(11)
@@ -86,9 +89,7 @@ int main() {
               << p.R_get(i) << '\n';
   };
   std::cout << "\n\n";
-  std::cout << "Nella finestra grafica che si apre i suscettibili sono verdi, "
-               "gli infetti rossi e i rimossi blu."
-            << '\n';
+
   Board b(n_s, n_i, n_r, beta_, gamma_, n_d);
-  b.draw();  
+  b.draw();
 }
