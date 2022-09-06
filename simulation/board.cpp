@@ -1,17 +1,14 @@
 #include "board.hpp"
-
+#include "font.hpp"
 #include <SFML/Graphics.hpp>
 #include <array>
 #include <cmath>
 #include <ctime>
-#include <iostream>
 #include <random>
+#include <vector>
 #include <stdexcept>
 #include <thread>
-#include <vector>
-#include <cassert>
-
-#include "font.hpp"
+#include <iomanip>
 
 Board::Board(int s, int i, int r, double b, double y, int days_)
     : dimension_{static_cast<int>(sqrt(s + i + r)) + 2},
@@ -21,7 +18,7 @@ Board::Board(int s, int i, int r, double b, double y, int days_)
   inf = i;
   rim = r;
   days = days_;
-  count_time = 0;
+  count_time=0;
   num_i = i;
   num_s = dimension_ * dimension_;
   num_r = 0;
@@ -40,7 +37,7 @@ Board::Board(int s, int i, int r, double b, double y, int days_)
 
 int Board::return_beta() {
   double num1 = beta_;
-
+  
   if (distr(generator) < num1) {
     return 1;
   } else {
@@ -57,49 +54,49 @@ int Board::return_gamma() {
   }
 }
 void Board::evolve() {
-  count_time += 1;
+  count_time+=1;
   num_i = 0;
   num_s = 0;
   num_r = 0;
   int count_i;
   count_i = 0;
-  for (int l = 1; l < dimension_ - 1; ++l) {
+  for (int l = 1; l < dimension_-1; ++l) {
     for (int c = 1; c < dimension_ - 1; ++c) {
       switch (grid[l][c]) {
-        case Diag::s:
-          for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-              if (grid[l - i][c - j] == Diag::i) {
-                count_i += 1;
-              }
+      case Diag::s:
+        for (int i = -1; i <= 1; i++) {
+          for (int j = -1; j <= 1; j++) {
+            if (grid[l - i][c - j] == Diag::i) {
+              count_i += 1;
             }
           }
-          if (count_i >= 1) {
-            if (return_beta() == 1) {
-              grid[l][c] = Diag::i;
-              num_i += 1;
-            } else {
-              grid[l][c] = Diag::s;
-              num_s += 1;
-            }
+        }
+        if (count_i >= 1) {
+          if (return_beta() == 1) {
+            grid[l][c] = Diag::i;
+            num_i += 1;
           } else {
             grid[l][c] = Diag::s;
             num_s += 1;
           }
-          break;
-        case Diag::i:
-          if (return_gamma() == 1) {
-            grid[l][c] = Diag::r;
-            num_r += 1;
-          } else {
-            grid[l][c] = Diag::i;
-            num_i += 1;
-          }
-          break;
-        case Diag::r:
+        } else {
+          grid[l][c] = Diag::s;
+          num_s += 1;
+        }
+        break;
+      case Diag::i:
+        if (return_gamma() == 1) {
           grid[l][c] = Diag::r;
           num_r += 1;
-          break;
+        } else {
+          grid[l][c] = Diag::i;
+          num_i += 1;
+        }
+        break;
+      case Diag::r:
+        grid[l][c] = Diag::r;
+        num_r += 1;
+        break;
       }
     }
   }
@@ -109,12 +106,12 @@ void Board::evolve() {
 
 void Board::draw() {
   float bit_size = 1.;
-  if (dimension_ > 100 && dimension_ < 350) {
+  if (dimension_>100 && dimension_< 350) {
     bit_size = 2.;
   }
-  if (dimension_ < 100) {
-    bit_size = 4.;
-  }
+    if(dimension_<100){
+        bit_size=4.;
+    }
 
   int win_size = static_cast<int>(bit_size * dimension_);
   sf::RenderWindow window(sf::VideoMode(win_size * 2, win_size), "epidemia");
@@ -127,30 +124,36 @@ void Board::draw() {
   rec_bit.setFillColor(sf::Color::Blue);
 
   while (window.isOpen()) {
+
     sf::Event event;
     while (window.pollEvent(event)) {
-      if (event.type == sf::Event::Closed) {
-        window.close();
-      }
 
-      window.clear();
-      std::this_thread::sleep_for(std::chrono::seconds(3));
+      if (event.type == sf::Event::Closed){
+        window.close();
+      
+    }
+    
+
+    window.clear();
+   
       evolve();
-      for (int l = 1; l < dimension_ - 1; ++l) {
-        for (int c = 1; c < dimension_ - 1; ++c) {
+        
+        std::this_thread::sleep_for(std::chrono::seconds(3));
+      for (int l = 1; l < dimension_-1; ++l) {
+        for (int c = 1; c < dimension_-1; ++c) {
           switch (grid[l][c]) {
-            case Diag::s:
-              sus_bit.setPosition(bit_size * c, bit_size * l);
-              window.draw(sus_bit);
-              break;
-            case Diag::i:
-              inf_bit.setPosition(bit_size * c, bit_size * l);
-              window.draw(inf_bit);
-              break;
-            case Diag::r:
-              rec_bit.setPosition(bit_size * c, bit_size * l);
-              window.draw(rec_bit);
-              break;
+          case Diag::s:
+            sus_bit.setPosition(bit_size * c, bit_size * l);
+            window.draw(sus_bit);
+            break;
+          case Diag::i:
+            inf_bit.setPosition(bit_size * c, bit_size * l);
+            window.draw(inf_bit);
+            break;
+          case Diag::r:
+           rec_bit.setPosition(bit_size * c, bit_size * l);
+            window.draw(rec_bit);
+            break;
           }
         }
       };
@@ -164,16 +167,16 @@ void Board::draw() {
       sf::Text text_i;
       sf::Text text_r;
       sf::Font font;
-      font.loadFromMemory(chintzy_ttf, chintzy_ttf_len);
+      font.loadFromMemory(chintzy_ttf,chintzy_ttf_len);
       text_s.setFont(font);
       text_i.setFont(font);
       text_r.setFont(font);
       text_s.setString(nums);
       text_i.setString(numi);
       text_r.setString(numr);
-      text_s.setCharacterSize(0.1 * win_size);
-      text_i.setCharacterSize(0.1 * win_size);
-      text_r.setCharacterSize(0.1 * win_size);
+      text_s.setCharacterSize(0.1*win_size);
+      text_i.setCharacterSize(0.1*win_size);
+      text_r.setCharacterSize(0.1*win_size);
       text_s.setFillColor(sf::Color::Green);
       text_i.setFillColor(sf::Color::Red);
       text_r.setFillColor(sf::Color::Blue);
@@ -185,22 +188,26 @@ void Board::draw() {
       window.draw(text_i);
       window.draw(text_r);
       window.display();
-      if (count_time == days) {
-        window.clear();
-        sf::Text text_end;
-        text_end.setFont(font);
-        text_end.setFillColor(sf::Color::White);
-        text_end.setString("SIMULATION ENDED:");
-        text_end.setPosition(0.35 * win_size, 0.45 * win_size);
-        text_end.setCharacterSize(0.1 * win_size);
-        window.draw(text_end);
-        window.draw(text_s);
-        window.draw(text_i);
-        window.draw(text_r);
-        window.display();
-        std::this_thread::sleep_for(std::chrono::seconds(15));
-        window.close();
-      }
+        if(count_time==days){
+            window.clear();
+              sf::Text text_end;
+              text_end.setFont(font);
+              text_end.setFillColor(sf::Color::White);
+              text_end.setString("SIMULATION ENDED:");
+              text_end.setPosition(0.35*win_size,0.45*win_size);
+              text_end.setCharacterSize(0.1*win_size);
+              window.draw(text_end);
+              window.draw(text_s);
+              window.draw(text_i);
+              window.draw(text_r);
+              window.display();
+              std::this_thread::sleep_for(std::chrono::seconds(15));
+              window.close();
+           
+            
+              }
+        
+              
     }
   }
 }
