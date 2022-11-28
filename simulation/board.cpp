@@ -6,6 +6,9 @@
 #include <cassert>
 #include <thread>
 
+   std::default_random_engine generator;
+   std::uniform_real_distribution<double> distr(0.0, 1.0);
+
 Board::Board(int s, int i, int r, double b, double y, int days_)
     : dimension_{static_cast<int>(sqrt(s + i + r)) + 2},
       grid(dimension_, std::vector<Diag>(dimension_)), 
@@ -14,33 +17,33 @@ Board::Board(int s, int i, int r, double b, double y, int days_)
       inf {i},
       rim {r},
       days {days_},
-      count_time {0},
       num_i {i},
-      num_s {dimension_ * dimension_},
-      num_r {0} {
-  assert(days>0);
-    int i=0;      
-   while(i<inf){
+      num_s {dimension_ * dimension_}
+      {
+  assert(days>0); 
+  int l=0;   
+   while( l<inf){
     int ran1 = distr(generator) * dimension_;
     int ran2 = distr(generator) * dimension_;
       if( grid[ran1][ran2] == Diag::i){
-      i=i;
+      l=l;
       }
       else{
       grid[ran1][ran2] = Diag::i;
-      i++;
+      l++;
        }
    }
-       
-    while(i < rim) {
+int e=0;
+    while( e < rim) {
       int ran3 = distr(generator) * dimension_;
       int ran4 = distr(generator) * dimension_;
       if( grid[ran3][ran4] == Diag::i || grid[ran3][ran4] == Diag::r){
-      i=i;
+      e=e;
       }
       else{
       grid[ran3][ran4] = Diag::r;
-      i++;
+      e++;
+      }
       }
       }
 
@@ -68,14 +71,15 @@ void Board::evolve() {
   num_s = 0;
   num_r = 0;
   int count_i;
-  count_i = 0;
+  count_i =0;
+  std::vector<line> virtual_grid=grid;
   for (int l = 1; l < dimension_ - 1; ++l) {
     for (int c = 1; c < dimension_ - 1; ++c) {
-      switch (grid[l][c]) {
+      switch (virtual_grid[l][c]) {
         case Diag::s:
           for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
-              if (grid[l - i][c - j] == Diag::i) {
+              if (virtual_grid[l - i][c - j] == Diag::i) {
                 count_i += 1;
               }
             }
@@ -109,9 +113,7 @@ void Board::evolve() {
       }
     }
   }
-};
-
-;
+}
 
 void Board::draw() {
   float bit_size = 1.;
@@ -159,7 +161,7 @@ void Board::draw() {
               break;
           }
         }
-      };
+      }
       sf::RectangleShape black_quad(sf::Vector2f(win_size, win_size));
       black_quad.setPosition(1.5 * win_size, 0.25 * win_size);
       black_quad.setFillColor(sf::Color::Black);
