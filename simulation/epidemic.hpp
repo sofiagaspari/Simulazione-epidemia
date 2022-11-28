@@ -32,3 +32,4 @@ class Epidemic {
   int R_get(int i) const;  
 };
 #endif
+
