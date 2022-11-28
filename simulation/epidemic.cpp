@@ -20,20 +20,20 @@ State Epidemic::Evolve(State const &start) {
   assert(end.inf_ >= 0);
   assert(end.rim_ >= 0);
   return end;
-};
+}
 void Epidemic::Update(int d) {  
   for (int i = 0; i < d; ++i) {
     memory.push_back(Evolve(memory[i]));
   }
-};
+}
 
 int Epidemic::S_get(int i) const { 
   return memory[i].sus_;
-};
+}
 
 int Epidemic::I_get(int i) const { 
   return memory[i].inf_;
-};
+}
 int Epidemic::R_get(int i) const {  
   return memory[i].rim_;
-};
+}
