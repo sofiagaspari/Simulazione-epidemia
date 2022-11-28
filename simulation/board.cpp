@@ -8,28 +8,41 @@
 
 Board::Board(int s, int i, int r, double b, double y, int days_)
     : dimension_{static_cast<int>(sqrt(s + i + r)) + 2},
-      grid(dimension_, std::vector<Diag>(dimension_)) {
-  beta_ = b;
-  gamma_ = y;
-  inf = i;
-  rim = r;
-  days = days_;
-  count_time = 0;
-  num_i = i;
-  num_s = dimension_ * dimension_;
-  num_r = 0;
+      grid(dimension_, std::vector<Diag>(dimension_)), 
+      beta_ {b},
+      gamma_ {y},
+      inf {i},
+      rim {r},
+      days {days_},
+      count_time {0},
+      num_i {i},
+      num_s {dimension_ * dimension_},
+      num_r {0} {
   assert(days>0);
-  for (int i = 0; i < inf; i++) {
+    int i=0;      
+   while(i<inf){
     int ran1 = distr(generator) * dimension_;
     int ran2 = distr(generator) * dimension_;
-    grid[ran1][ran2] = Diag::i;
-    for (int i = 0; i < rim; i++) {
+      if( grid[ran1][ran2] == Diag::i){
+      i=i;
+      }
+      else{
+      grid[ran1][ran2] = Diag::i;
+      i++;
+       }
+   }
+       
+    while(i < rim) {
       int ran3 = distr(generator) * dimension_;
       int ran4 = distr(generator) * dimension_;
+      if( grid[ran3][ran4] == Diag::i || grid[ran3][ran4] == Diag::r){
+      i=i;
+      }
+      else{
       grid[ran3][ran4] = Diag::r;
-    }
-  }
-}
+      i++;
+      }
+      }
 
 int Board::return_beta() {
   double num1 = beta_;
