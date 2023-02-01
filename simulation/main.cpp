@@ -1,9 +1,9 @@
-#include <iostream>
-#include "board.hpp"
-#include "epidemic.hpp"
 #include <iomanip>
+#include <iostream>
 #include <stdexcept>
 
+#include "board.hpp"
+#include "epidemic.hpp"
 
 int main() {
   int n_s;
@@ -94,5 +94,5 @@ int main() {
                "gli infetti rossi e i rimossi blu."
             << '\n';
   Board b(n_s, n_i, n_r, beta_, gamma_, n_d);
-  b.draw();  
+  b.draw();
 }
