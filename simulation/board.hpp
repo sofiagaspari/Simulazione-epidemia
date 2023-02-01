@@ -1,8 +1,7 @@
 #ifndef BOARD_HPP
 #define BOARD_HPP
-#include <vector>
 #include <random>
-
+#include <vector>
 
 enum class Diag : char { s, i, r };
 using line = std::vector<Diag>;
@@ -13,13 +12,11 @@ class Board {
   std::vector<line> grid;
   double beta_;
   double gamma_;
-  int count_time=0;
+  int count_time = 0;
   int inf;
   int rim;
+  int sus;
   int days;
-  int num_i;
-  int num_s;
-  int num_r=0;
 
  public:
   Board(int s, int i, int r, double b, double y, int days_);
