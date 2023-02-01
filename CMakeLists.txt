@@ -1,12 +1,26 @@
-cmake_minimum_required(VERSION 3.16.3)
+cmake_minimum_required(VERSION 3.16)
+project(sir VERSION 0.1.0)
 
-project(sir)
+include(CTest)
+
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS ON)
 
+string(APPEND CMAKE_CXX_FLAGS " -Wall -Wextra")
+string(APPEND CMAKE_CXX_FLAGS_DEBUG " -fsanitize=address -fno-omit-frame-pointer")
+string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address -fno-omit-frame-pointer")
 
-ADD_SUBDIRECTORY(simulation)
-ADD_SUBDIRECTORY(tests)
+find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 
-SET(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Wextra -g -fsanitize=address")
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
+add_executable(sir ./simulation/main.cpp ./simulation/epidemic.cpp ./simulation/board.cpp)
+
+target_link_libraries(sir PRIVATE sfml-graphics sfml-system sfml-window)
+
+if (BUILD_TESTING)
+
+  add_executable(sir-test ./tests/test.cpp ./simulation/epidemic.cpp)
+  target_link_libraries(sir-test PRIVATE sfml-graphics)
+  add_test(NAME sir-test COMMAND sir-test)
+
+endif()
