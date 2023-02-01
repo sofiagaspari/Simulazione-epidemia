@@ -6,9 +6,9 @@ Il progetto studia l’espandersi di un’epidemia nel corso del tempo all’int
 
 # Come compilare, eseguire e testare il programma 
 
-Per compilare ed eseguire il programma i comandi sono: 
+Per compilare ed eseguire il programma, all'interno della cartella simulation, i comandi sono: 
 
-$ g++ -Wall -Wextra -fsanitize=address main.cpp -o main -lsfml-graphics -lsfml-window -lsfml-system 
+$ g++ -Wall -Wextra -fsanitize=address main.cpp epidemic.cpp board.cpp -o main -lsfml-graphics -lsfml-window -lsfml-system 
 
 $ ./main 
 
@@ -16,9 +16,9 @@ Fatto ciò, compariranno sul terminale alcune indicazioni; viene chiesto di inse
 
 Inseriti i valori, compare sul terminale una tabella con il numero dei suscettibili, infetti e rimossi giorno per giorno e si apre una finestra grafica la cui spiegazione dei colori è stampata sul terminale. 
 
-Per testare il programma i comandi sono: 
+Per testare il programma, all'interno della cartella tests, i comandi sono: 
 
-$ g++ -Wall -Wextra -fsanitze=address test.cpp -o test 
+$ g++ -Wall -Wextra -fsanitze=address test.cpp ../simulation/epidemic.cpp -o test 
 
 $ ./test 
 
