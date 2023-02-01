@@ -28,7 +28,3 @@ void Epidemic::Update(int d) {
 int Epidemic::S_get(int i) const { return memory[i].sus_; }
 int Epidemic::I_get(int i) const { return memory[i].inf_; }
 int Epidemic::R_get(int i) const { return memory[i].rim_; }
-
-int Epidemic::R_get(int i) const {  
-  return memory[i].rim_;
-}
