@@ -1,8 +1,5 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
-#include <stdexcept>
-#include <vector>
-
 #include "../simulation/epidemic.hpp"
 #include "doctest.h"
 
@@ -15,7 +12,7 @@ TEST_CASE("testing Epidemic") {
 }
 
 TEST_CASE("testing Evolve") {
-  e.Update(1);
+  e.Update();
   CHECK(e.S_get(1) == 499);
   CHECK(e.I_get(1) == 1);
   CHECK(e.R_get(1) == 0);
