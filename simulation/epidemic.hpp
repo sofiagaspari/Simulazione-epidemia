@@ -21,7 +21,7 @@ class Epidemic {
   Epidemic(int s, int i, int r, double b, double y, int d);
 
   State Evolve(State const &start);
-  void Update(int d);
+  void Update();
 
   int S_get(int i) const;
 

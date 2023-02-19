@@ -19,8 +19,8 @@ State Epidemic::Evolve(State const &start) {
   assert(end.rim_ >= 0);
   return end;
 }
-void Epidemic::Update(int d) {
-  for (int i = 0; i < d; ++i) {
+void Epidemic::Update() {
+  for (int i = 0; i < days; ++i) {
     memory.push_back(Evolve(memory[i]));
   }
 }

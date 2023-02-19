@@ -5,6 +5,7 @@
 #include <cmath>
 #include <ctime>
 #include <thread>
+#include <random>
 
 #include "font.hpp"
 
@@ -25,9 +26,7 @@ Board::Board(int s, int i, int r, double b, double y, int days_)
   while (l < inf) {
     int ran1 = distr(generator) * dimension_;
     int ran2 = distr(generator) * dimension_;
-    if (grid[ran1][ran2] == Diag::i) {
-      l = l;
-    } else {
+    if (grid[ran1][ran2] == Diag::i) {} else {
       grid[ran1][ran2] = Diag::i;
       l++;
     }
@@ -36,9 +35,8 @@ Board::Board(int s, int i, int r, double b, double y, int days_)
   while (e < rim) {
     int ran3 = distr(generator) * dimension_;
     int ran4 = distr(generator) * dimension_;
-    if (grid[ran3][ran4] == Diag::i || grid[ran3][ran4] == Diag::r) {
-      e = e;
-    } else {
+    if (grid[ran3][ran4] == Diag::i || grid[ran3][ran4] == Diag::r) {}
+    else {
       grid[ran3][ran4] = Diag::r;
       e++;
     }
@@ -51,7 +49,7 @@ int Board::return_beta() {
   if (distr(generator) < num1) {
     return 1;
   } else {
-    return 2;
+    return 0;
   }
 }
 
@@ -60,7 +58,7 @@ int Board::return_gamma() {
   if (distr(generator) < num2) {
     return 1;
   } else {
-    return 2;
+    return 0;
   }
 }
 void Board::evolve() {

@@ -1,6 +1,6 @@
 #ifndef BOARD_HPP
 #define BOARD_HPP
-#include <random>
+
 #include <vector>
 
 enum class Diag : char { s, i, r };
